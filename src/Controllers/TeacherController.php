@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Infrastructure\Database\DatabaseConnection;
+use App\Infrastructure\Persistence\DepartmentRepository;
+use App\Infrastructure\Persistence\TeacherRepository;
+use App\School\Services\DepartmentService;
+use App\School\Services\TeacherService;
+
+class TeacherController
+{
+    private TeacherService $teacherService;
+    private DepartmentService $departmentService;
+
+    public function __construct()
+    {
+
+        $db = DatabaseConnection::getConnection();
+        $teacherRepository = new TeacherRepository($db);
+        $teacherService = new TeacherService($teacherRepository);
+
+        $departmentRepository = new DepartmentRepository($db);
+        $departmentService = new DepartmentService($departmentRepository);
+
+        $this->teacherService = $teacherService;
+        $this->departmentService = $departmentService;
+
+    }
+
+    public function receivePostAndSendToTeacherService()
+    {
+
+        $firstName = $_POST['first_name'];
+        $lastName = $_POST['last_name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $dni = $_POST['dni'];
+
+        $this->teacherService->createTeacher($firstName, $lastName, $email, $password, $dni);
+
+        header('Location: /teacher?success=1');
+        exit;
+    }
+
+    public function showData()
+    {
+        $teachers = $this->teacherService->getAllTeachers();
+        $departments = $this->departmentService->getAllDepartments();
+
+        echo view('teachers', [
+            'teachers' => $teachers,
+            'departments' => $departments,
+        ]);
+    }
+    public function receivePostAndSendToDepartmentService()
+    {
+        $teacherId = $_POST['teacher_id'];
+        $departmentId = $_POST['department_id'];
+
+        $this->departmentService->callToAssignDepartment($teacherId, $departmentId);
+
+        header('Location: /teacher?success=2');
+        exit;
+    }
+}
