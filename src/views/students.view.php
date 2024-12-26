@@ -5,17 +5,13 @@
     <h1 class="text-3xl font-bold text-center mb-8 text-blue-700">📘 Gestión de Alumnos y Asignaturas</h1>
 
     <!-- Mensajes de error-->
-    <?php if ($_GET['success'] == 1): ?>
-        <div class="alert alert-success text-green-600 font-bold mb-4">
-            ✅ Alumno creado con éxito.
-        </div>
-    <?php elseif ($_GET['success'] == 2): ?>
-        <div class="alert alert-success text-green-600 font-bold mb-4">
-            ✅ Alumno asignado a una asignatura con éxito.
-        </div>
-        <?php elseif ($_GET['success'] == 3): ?>
+    <?php if ($_GET['successCourse'] == 1): ?>
         <div class="alert alert-success text-green-600 font-bold mb-4">
             ✅ Curso creado con éxito.
+        </div>
+        <?php elseif ($_GET['sucess']==1): ?>
+        <div class="alert alert-error text-red-600 font-bold mb-4">
+        ✅ Alumno creado con éxito.
         </div>
     <?php elseif (isset($_GET['error'])): ?>
         <div class="alert alert-error text-red-600 font-bold mb-4">

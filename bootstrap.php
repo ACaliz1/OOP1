@@ -12,6 +12,7 @@ use App\Infrastructure\Database\DatabaseConnection;
 use App\Infrastructure\Routing\Router;
 use App\School\Services\Services;
 use App\Controllers\StudentController;
+use App\Controllers\CourseController;
 
 $db = DatabaseConnection::getConnection();
 $services = new Services();
@@ -27,7 +28,7 @@ $router->addRoute('GET', '/', [new HomeController(), 'index'])
     ->addRoute('POST', '/assign-department', [new TeacherController(), 'receivePostAndSendToDepartmentService'])
     ->addRoute('POST', '/create-department', [new DepartmentController(), 'receiveAndCreateDepartment'])
     ->addRoute('GET', '/student', [new StudentController(), 'showData'])
-    ->addRoute('POST', '/create-student', [new StudentController(), 'receivePostAndSendToStudentService']);
-
+    ->addRoute('POST', '/create-student', [new StudentController(), 'receivePostAndSendToStudentService'])
+    ->addRoute('POST', '/create-course', [new CourseController(), 'receivePostAndSendToCourseService']);
 
 

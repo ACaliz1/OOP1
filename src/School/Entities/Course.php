@@ -5,10 +5,12 @@
 
     class Course{
         protected $name;
+        protected ?int $id = null;  
         protected $subjects=[];
 
-        function __construct(string $name){
+        function __construct(string $name, int $id){
             $this->name=$name;
+            $this->id=$id;
         }
 
         function addSubject(Subject $subject){
@@ -16,4 +18,11 @@
             return $this;
         }
 
+        function getName(){
+            return $this->name;
+        }
+
+        function getID(){
+            return $this->id;
+        }
     }
