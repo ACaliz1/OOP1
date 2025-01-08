@@ -16,7 +16,7 @@
         <!-- Card: Add Student -->
         <a href="/student" class="block bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition transform hover:scale-105 text-center">
             <h2 class="text-2xl font-bold text-green-700 mb-2">👩‍🎓 Add Student</h2>
-            <p class="text-gray-600">Registra nuevos estudiantes en la plataforma.</p>
+            <p class="text-gray-600">Gestiona la información de los Alumnos.</p>
         </a>
 
         <!-- Card: Enroll Course -->
