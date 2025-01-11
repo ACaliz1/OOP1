@@ -67,9 +67,31 @@ class StudentRepository implements IStudentRepository{
 
     public function findAll(): array
     {
-        $query = "SELECT id, uuid, first_name, last_name, email, password, dni, created_at, updated_at 
-                  FROM users 
-                  WHERE user_type = 'student'";
+        $query = "
+            SELECT 
+                u.id AS user_id, 
+                s.id AS student_id, 
+                u.first_name, 
+                u.last_name, 
+                u.email, 
+                u.dni, 
+                GROUP_CONCAT(DISTINCT c.name SEPARATOR ', ') AS course_name
+            FROM 
+                students s
+            JOIN 
+                users u ON s.user_id = u.id
+            LEFT JOIN 
+                enrollments e ON e.student_id = s.id
+            LEFT JOIN 
+                subjects sub ON e.subject_id = sub.id
+            LEFT JOIN 
+                courses c ON sub.course_id = c.id
+            WHERE 
+                u.user_type = 'student'
+            GROUP BY 
+                u.id, s.id, u.first_name, u.last_name, u.email, u.dni
+        ";
+    
         $stmt = $this->db->prepare($query);
         $stmt->execute();
     
@@ -79,21 +101,16 @@ class StudentRepository implements IStudentRepository{
                 $row['first_name'],
                 $row['last_name'],
                 $row['email'],
-                $row['password'],
+                '', // Contraseña no necesaria
                 $row['dni']
             );
-    
-            // Asignar valores adicionales que están en la clase base User
-            $student->setId($row['id']);
-            $student->setUuid($row['uuid']);
-    
+            $student->setStudentId((int)$row['student_id']);
+            $student->setId((int)$row['user_id']);
+            $student->setCourseName($row['course_name'] ?? 'Sin Curso'); // Añadir el nombre del curso
             $students[] = $student;
         }
-    
         return $students;
     }
-    
-    
 
     public function findById($id): ?Student
     {
@@ -104,4 +121,13 @@ class StudentRepository implements IStudentRepository{
         return $stmt->fetchObject(Student::class) ?: null;
     }
 
+    public function exists(int $id): bool
+    {
+        $query = "SELECT COUNT(*) FROM students WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    
+        return $stmt->fetchColumn() > 0;
+    }
 }

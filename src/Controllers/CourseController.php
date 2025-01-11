@@ -3,35 +3,51 @@
 namespace App\Controllers;
 
 use App\Infrastructure\Database\DatabaseConnection;
-use App\School\Services\CourseService;
 use App\Infrastructure\Persistence\CourseRepository;
+use App\Infrastructure\Persistence\StudentRepository;
+use App\Infrastructure\Persistence\SubjectRepository;
+use App\School\Services\CourseService;
 
 class CourseController
 {
     private CourseService $courseService;
-    private CourseRepository $courseRepository;
 
     public function __construct()
     {
         $db = DatabaseConnection::getConnection();
-        $this->courseRepository = new CourseRepository($db);
-        $this->courseService = new CourseService($this->courseRepository);
+        $courseRepository = new CourseRepository($db);
+        $studentRepository = new StudentRepository($db);
+        $subjectRepository = new SubjectRepository($db);
+
+        $this->courseService = new CourseService($courseRepository, $studentRepository, $subjectRepository);
     }
 
     public function receivePostAndSendToCourseService()
     {
         $name = $_POST['name'];
-
+    
+        // Llamar al servicio para crear el curso
         $this->courseService->createCourse($name);
-
+    
         header('Location: /student?successCourse=1');
+        exit;
+    }
+    
+
+    public function receivePostAndAssignWithCourseService()
+    {
+        $courseId = $_POST['course_id'];
+        $studentId = $_POST['student_id'];
+
+        $this->courseService->assignStudentToCourse($courseId, $studentId);
+
+        header('Location: /student?CourseAssign=1');
         exit;
     }
 
     public function showData()
     {
         $courses = $this->courseService->getAllCourses();
-        var_dump($courses);
         echo view('courses', [
             'courses' => $courses,
         ]);

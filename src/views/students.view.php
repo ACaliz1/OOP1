@@ -6,20 +6,24 @@
 
     <!-- Mensajes de error-->
     <?php if ($_GET['successCourse'] == 1): ?>
-        <div class="alert alert-success text-green-600 font-bold mb-4">
-            ✅ Curso creado con éxito.
-        </div>
-        <?php elseif ($_GET['sucess']==1): ?>
-        <div class="alert alert-error text-red-600 font-bold mb-4">
+    <div class="alert alert-success text-green-600 font-bold mb-4">
+        ✅ Curso creado con éxito.
+    </div>
+    <?php elseif ($_GET['sucess'] == 1): ?>
+    <div class="alert alert-success text-green-600 font-bold mb-4">
         ✅ Alumno creado con éxito.
-        </div>
+    </div>
+    <?php elseif ($_GET['CourseAssign'] == 1): ?>
+    <div class="alert alert-success text-green-600 font-bold mb-4">
+        ✅ Alumno asignado a curso con éxito.
+    </div>
     <?php elseif (isset($_GET['error'])): ?>
-        <div class="alert alert-error text-red-600 font-bold mb-4">
-            ❌ <?= ($_GET['error']) ?>
-        </div>
+    <div class="alert alert-error text-red-600 font-bold mb-4">
+        ❌ <?=($_GET['error'])?>
+    </div>
     <?php endif; ?>
 
-        <!-- Form crear Curso -->
+    <!-- Form crear Curso -->
     <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Crear un Nuevo Curso</h2>
     <div class="bg-white p-6 rounded-lg shadow-lg mb-10">
         <form action="/create-course" method="POST" autocomplete="off" class="space-y-4">
@@ -89,36 +93,47 @@
     <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">📋 Asignar Estudiante a un Curso</h2>
 
     <div class="bg-white p-6 rounded-lg shadow-lg mb-10">
-        <form action="/assign-course" method="POST" class="space-y-4">
-            <div>
-                <label for="teacher_id" class="block font-semibold mb-1">Estudiante:</label>
-                <select id="teacher_id" name="student_id" required class="w-full p-2 border border-gray-300 rounded-lg">
-                    <option value="" disabled selected>Selecciona un Estudiante</option>
-                    <?php foreach ($students as $student): ?>
-                    <option value="<?= ($student->getId()) ?>">
-                        <?= ($student->getFirstName() . ' ' . $student->getLastName()) ?>
-                    </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+    <form action="/assign-course" method="POST" class="space-y-4">
+    <!-- Selección de estudiante -->
+    <div>
+        <label for="student_id" class="block font-semibold mb-1">Estudiante:</label>
+        <select id="student_id" name="student_id" required class="w-full p-2 border border-gray-300 rounded-lg">
+            <option value="" disabled selected>Selecciona un Estudiante</option>
+            <?php foreach ($students as $student): ?>
+                <option value="<?= $student->getStudentId() ?>">
+                    <?= $student->getFirstName() . ' ' . $student->getLastName() . ' (' . $student->getStudentId() . ')' ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-            <div>
-                <label for="department_id" class="block font-semibold mb-1">Curso:</label>
-                <select id="department_id" name="course_id" required
-                    class="w-full p-2 border border-gray-300 rounded-lg">
-                    <option value="" disabled selected>Selecciona un Curso</option>
-                    <?php foreach ($courses as $course): ?>
-                    <option value="<?= ($course->getId()) ?>">
-                        <?= ($course->getName()) ?>
-                    </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+    <!-- Selección de curso -->
+    <div>
+        <label for="course_id" class="block font-semibold mb-1">Curso:</label>
+        <select id="course_id" name="course_id" required
+            class="w-full p-2 border border-gray-300 rounded-lg">
+            <option value="" disabled selected>Selecciona un Curso</option>
+            <?php foreach ($courses as $course): ?>
+                <option value="<?= $course->getId() ?>">
+                    <?= $course->getName() ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
 
-            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
-                Asignar Departamento
-            </button>
-        </form>
+    <!-- Selección de asignatura (se llena dinámicamente) -->
+    <div id="subjects-container">
+        <label for="subject_id" class="block font-semibold mb-1">Asignatura:</label>
+        <select id="subject_id" name="subject_id" required class="w-full p-2 border border-gray-300 rounded-lg">
+            <option value="" disabled selected>Primero selecciona un curso</option>
+        </select>
+    </div>
+
+    <!-- Botón de envío -->
+    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
+        Asignar Estudiante a Asignatura
+    </button>
+</form>
     </div>
 
     <hr class="my-10 border-gray-300">
@@ -142,13 +157,13 @@
             <tbody>
                 <?php foreach ($students as $student): ?>
                 <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-4 text-center"><?= ($student->getId()) ?></td>
-                    <td class="py-3 px-4"><?= ($student->getFirstName()) ?></td>
-                    <td class="py-3 px-4"><?= ($student->getLastName()) ?></td>
-                    <td class="py-3 px-4"><?= ($student->getEmail()) ?></td>
-                    <td class="py-3 px-4"><?= ($student->getDni()) ?></td>
-                    <td class="py-3 px-4"><?= ($student->getCourseName() ?? 'Sin Curso') ?></td>
-                    </tr>
+                    <td class="py-3 px-4 text-center"><?=($student->getId())?></td>
+                    <td class="py-3 px-4"><?=($student->getFirstName())?></td>
+                    <td class="py-3 px-4"><?=($student->getLastName())?></td>
+                    <td class="py-3 px-4"><?=($student->getEmail())?></td>
+                    <td class="py-3 px-4"><?=($student->getDni())?></td>
+                    <td class="py-3 px-4"><?=($student->getCourseName() ?? 'Sin Curso')?></td>
+                </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
@@ -157,5 +172,24 @@
     <p class="text-center text-red-600 font-bold mt-6">❌ No hay Alumnos disponibles.</p>
     <?php endif; ?>
 </div>
+<script>
+    document.getElementById('course_id').addEventListener('change', function () {
+        const courseId = this.value;
+
+        // Petición AJAX para obtener las asignaturas relacionadas
+        fetch(`/get-subjects?course_id=${courseId}`)
+            .then(response => response.json())
+            .then(data => {
+                const subjectSelect = document.getElementById('subject_id');
+                subjectSelect.innerHTML = '<option value="" disabled selected>Selecciona una Asignatura</option>';
+                data.forEach(subject => {
+                    subjectSelect.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar las asignaturas:', error);
+            });
+    });
+</script>
 
 <?php require VIEWS . "/partials/footer.view.php"; ?>

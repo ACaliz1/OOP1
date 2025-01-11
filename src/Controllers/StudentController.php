@@ -3,29 +3,30 @@
 namespace App\Controllers;
 
 use App\Infrastructure\Database\DatabaseConnection;
-use App\Infrastructure\Persistence\StudentRepository;
 use App\Infrastructure\Persistence\CourseRepository;
-use App\School\Services\StudentService;
+use App\Infrastructure\Persistence\StudentRepository;
+use App\Infrastructure\Persistence\SubjectRepository;
 use App\School\Services\CourseService;
+use App\School\Services\StudentService;
 
-class StudentController{
-    private StudentService $studentService;
+class StudentController
+{
     private CourseService $courseService;
-    private StudentRepository $studentRepository;
-    private CourseRepository $courseRepository;
+    private StudentService $studentService;
 
-
-    public function __construct(){
+    public function __construct()
+    {
         $db = DatabaseConnection::getConnection();
-        $this->studentRepository = new StudentRepository($db);
-        $this->studentService = new StudentService($this->studentRepository);
-        $this->courseRepository = new CourseRepository($db);
-        $this->courseService = new CourseService($this->courseRepository);
+        $courseRepository = new CourseRepository($db);
+        $studentRepository = new StudentRepository($db);
+        $subjectRepository = new SubjectRepository($db);
+
+        $this->courseService = new CourseService($courseRepository, $studentRepository, $subjectRepository);
+        $this->studentService = new StudentService($studentRepository);
     }
 
     public function receivePostAndSendToStudentService()
     {
-
         $firstName = $_POST['first_name'];
         $lastName = $_POST['last_name'];
         $email = $_POST['email'];
@@ -40,13 +41,14 @@ class StudentController{
 
     public function showData()
     {
-        $students = $this->studentService->getAllStudents();
+        $students = $this->studentService->getAllStudents(); // Incluye el curso si es posible
         $courses = $this->courseService->getAllCourses();
+    
         echo view('students', [
             'students' => $students,
-            'courses' => $courses
-            // 'departments' => $departments,
+            'courses' => $courses,
         ]);
     }
+    
 
 }
