@@ -28,10 +28,7 @@
                         <a href="student" class="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold text-sm transition-all duration-100 hover:bg-blue-600 hover:shadow-lg">👥 Admin Students</a>
                     </li>
                     <li>
-                        <a href="add-task-form" class="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold text-sm transition-all duration-100 hover:bg-blue-600 hover:shadow-lg">📝 Enroll Course</a>
-                    </li>
-                    <li>
-                        <a href="admin-tasks" class="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold text-sm transition-all duration-100 hover:bg-blue-600 hover:shadow-lg">📋 Admin Tasks</a>
+                        <a href="course" class="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold text-sm transition-all duration-100 hover:bg-blue-600 hover:shadow-lg">📋 Admin Courses</a>
                     </li>
                 </ul>
             </nav>

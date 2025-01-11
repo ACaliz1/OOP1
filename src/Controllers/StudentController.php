@@ -25,6 +25,7 @@ class StudentController
         $this->studentService = new StudentService($studentRepository);
     }
 
+    // Recibe los datos del formulario y crea un nuevo estudiante
     public function receivePostAndSendToStudentService()
     {
         $firstName = $_POST['first_name'];
@@ -39,9 +40,10 @@ class StudentController
         exit;
     }
 
+    // Asignar un estudiante a un curso
     public function showData()
     {
-        $students = $this->studentService->getAllStudents(); // Incluye el curso si es posible
+        $students = $this->studentService->getAllStudents();
         $courses = $this->courseService->getAllCourses();
     
         echo view('students', [

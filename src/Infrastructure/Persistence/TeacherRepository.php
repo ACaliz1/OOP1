@@ -15,6 +15,7 @@ class TeacherRepository implements ITeacherRepository
         $this->db = $db;
     }
 
+    // Guarda un nuevo profesor
     public function save(Teacher $teacher): void
     {
         $uuid = $this->generateUuid();
@@ -46,6 +47,7 @@ class TeacherRepository implements ITeacherRepository
         $stmt->execute();
     }
 
+    // Encuentra un profesor por su ID
     public function findById($id): ?Teacher
     {
         $query = "SELECT * FROM teachers WHERE id = :id";
@@ -55,6 +57,7 @@ class TeacherRepository implements ITeacherRepository
         return $stmt->fetchObject(Teacher::class) ?: null;
     }
 
+    // Encuentra un profesor por su DNI
     public function findAll(): array {
         $query = "
             SELECT 
@@ -95,6 +98,7 @@ class TeacherRepository implements ITeacherRepository
         return $teachers;
     }
 
+    // Genera un UUID
     private function generateUuid(): string
     {
         return sprintf(

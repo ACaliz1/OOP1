@@ -11,6 +11,8 @@
         function __construct(\PDO $db){
             $this->db=$db;
         }
+
+        // Devuelve todos los departamentos
         function save(Enrollment $enrollment){
             $stmt=$this->db->prepare("INSERT INTO enrollments() VALUES()");
             $stmt->execute([]);
@@ -18,6 +20,8 @@
         }
         
         function findByDni(string $dni){
-
+            $stmt=$this->db->prepare("SELECT * FROM enrollments WHERE dni=:dni");
+            $stmt->execute(['dni'=>$dni]);
+            return $stmt->fetchObject(Enrollment::class);
         }
     }

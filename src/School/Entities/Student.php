@@ -9,7 +9,7 @@ class Student extends User
 {
     use Timestampable;
 
-    protected ?int $studentId = null; // Añadir una propiedad específica para student_id
+    protected ?int $studentId = null;
     protected ?string $courseName = null;
     protected $enrollments = [];
 
@@ -29,7 +29,6 @@ class Student extends User
         return $this->courseName;
     }
 
-    // Métodos para manejar student_id
     public function setStudentId(int $studentId): void
     {
         $this->studentId = $studentId;
@@ -37,6 +36,6 @@ class Student extends User
 
     public function getStudentId(): int
     {
-        return $this->studentId; // Devuelve el student_id específico
+        return $this->studentId;
     }
 }

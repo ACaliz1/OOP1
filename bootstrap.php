@@ -32,7 +32,10 @@ $router->addRoute('GET', '/', [new HomeController(), 'index'])
     ->addRoute('POST', '/create-student', [new StudentController(), 'receivePostAndSendToStudentService'])
     ->addRoute('POST', '/create-course', [new CourseController(), 'receivePostAndSendToCourseService'])
     ->addRoute('POST', '/assign-course', [new CourseController(), 'receivePostAndAssignWithCourseService'])
-    ->addRoute('GET', '/get-subjects', [new SubjectController(), 'getSubjectsByCourse']);
+    ->addRoute('GET', '/get-subjects', [new SubjectController(), 'getSubjectsByCourse'])
+    ->addRoute('GET', '/course', action: [new SubjectController(), 'showData'])
+    ->addRoute('POST', '/create-subject', action: [new SubjectController(), 'createSubject']);
+
 
 
 

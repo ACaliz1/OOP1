@@ -9,7 +9,7 @@
     <div class="alert alert-success text-green-600 font-bold mb-4">
         ✅ Curso creado con éxito.
     </div>
-    <?php elseif ($_GET['sucess'] == 1): ?>
+    <?php elseif ($_GET['success'] == 1): ?>
     <div class="alert alert-success text-green-600 font-bold mb-4">
         ✅ Alumno creado con éxito.
     </div>
@@ -22,24 +22,6 @@
         ❌ <?=($_GET['error'])?>
     </div>
     <?php endif; ?>
-
-    <!-- Form crear Curso -->
-    <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Crear un Nuevo Curso</h2>
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-10">
-        <form action="/create-course" method="POST" autocomplete="off" class="space-y-4">
-            <div class="form-group">
-                <label for="name" class="block font-semibold mb-1">Nombre del Curso:</label>
-                <input type="text" id="name" name="name"
-                    class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Ingrese el nombre" autocomplete="off" required>
-            </div>
-
-            <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                Crear Curso
-            </button>
-        </form>
-    </div>
 
     <!-- Form crear Student -->
     <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">📝 Crear un Nuevo Estudiante</h2>
@@ -157,7 +139,7 @@
             <tbody>
                 <?php foreach ($students as $student): ?>
                 <tr class="border-b border-gray-200 hover:bg-gray-100">
-                    <td class="py-3 px-4 text-center"><?=($student->getId())?></td>
+                    <td class="py-3 px-4 text-center"><?=($student->getStudentId())?></td>
                     <td class="py-3 px-4"><?=($student->getFirstName())?></td>
                     <td class="py-3 px-4"><?=($student->getLastName())?></td>
                     <td class="py-3 px-4"><?=($student->getEmail())?></td>

@@ -5,9 +5,10 @@ namespace App\Infrastructure\Database;
 class DatabaseConnection {
     private static \PDO $db;
 
+    // Patrón Singleton para asegurar que solo se haga una conexión a la base de datos
     public static function getConnection() {
         if (!empty(self::$db)) {
-            return self::$db; // Devuelve la conexión existente
+            return self::$db;
         }
 
         $db_info = [
@@ -26,7 +27,7 @@ class DatabaseConnection {
                     \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
                 ]
             );
-            return self::$db; // Devuelve la instancia de PDO
+            return self::$db;
         } catch (\PDOException $e) {
             die("Error connecting to the database: " . $e->getMessage());
         }

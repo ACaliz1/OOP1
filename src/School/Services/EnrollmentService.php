@@ -3,6 +3,7 @@
     namespace App\School\Services;
     use App\School\Entities\Student;
     use App\School\Entities\Course;
+    use App\School\Entities\Enrollment;
     use App\Infrastructure\Persistence\StudentRepository;
     use App\Infrastructure\Persistence\EnrollmentRepository;
 
@@ -17,7 +18,7 @@
         }
 
         function enrollStudentInCourse(Student $student,Course $course){
-            $student=$this->studentRepository->findByDni($student->getDni());
+            $student=$this->studentRepository->findById($student->getStudentId());
             if(!$student){
                 throw new \Exception("Student not found");
             }

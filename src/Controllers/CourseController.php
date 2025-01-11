@@ -29,11 +29,11 @@ class CourseController
         // Llamar al servicio para crear el curso
         $this->courseService->createCourse($name);
     
-        header('Location: /student?successCourse=1');
+        header('Location: /course?successCourse=1');
         exit;
     }
     
-
+    // Asignar un estudiante a un curso
     public function receivePostAndAssignWithCourseService()
     {
         $courseId = $_POST['course_id'];
@@ -45,6 +45,7 @@ class CourseController
         exit;
     }
 
+    // Mostrar datos
     public function showData()
     {
         $courses = $this->courseService->getAllCourses();

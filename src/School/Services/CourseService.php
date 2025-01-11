@@ -23,6 +23,7 @@ class CourseService
         $this->subjectRepository = $subjectRepository;
     }
 
+    // Crear un nuevo curso
     public function createCourse(string $name): void
     {
         if (empty($name)) {
@@ -36,6 +37,7 @@ class CourseService
         $this->courseRepository->save($course);
     }
 
+    // Asignar un estudiante a un curso
     public function assignStudentToCourse(int $courseId, int $studentId): void
     {
         $subjects = $this->subjectRepository->findByCourseId($courseId);
@@ -47,8 +49,10 @@ class CourseService
         $this->courseRepository->assignStudentToSubject($studentId, $subjectId);
     }
 
+    // Obtener todos los cursos
     public function getAllCourses(): array
     {
         return $this->courseRepository->findAll();
     }
+    
 }

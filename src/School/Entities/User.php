@@ -11,12 +11,12 @@ class User
     private string $password;
     private string $dni;
 
-    // The id, createdAt, and updatedAt fields are set automatically by the database
+    // Los campos id, createdAt y updatedAt son establecidos automáticamente por la base de datos
     private ?int $id = null;
     private ?\DateTime $createdAt = null;
     private ?\DateTime $updatedAt = null;
 
-    //The uuid are set automatically by the repository
+    // El uuid es establecido automáticamente por el repositorio
     private string $uuid;
 
 

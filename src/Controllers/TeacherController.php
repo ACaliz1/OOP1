@@ -28,6 +28,7 @@ class TeacherController
 
     }
 
+    // Recibe los datos del formulario y crea un nuevo profesor
     public function receivePostAndSendToTeacherService()
     {
 
@@ -43,6 +44,7 @@ class TeacherController
         exit;
     }
 
+    // Mostrar datos
     public function showData()
     {
         $teachers = $this->teacherService->getAllTeachers();
@@ -53,6 +55,7 @@ class TeacherController
             'departments' => $departments,
         ]);
     }
+    // Asignar un profesor a un departamento
     public function receivePostAndSendToDepartmentService()
     {
         $teacherId = $_POST['teacher_id'];

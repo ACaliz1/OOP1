@@ -13,6 +13,8 @@ class DepartmentService
     {
         $this->departmentRepository = $departmentRepository;
     }
+
+    // Crea un nuevo departamento
     public function createDepartment(string $name): Department
     {
         if (empty($name)) {
@@ -24,11 +26,14 @@ class DepartmentService
 
         return $department;
     }
+
+    // Obtiene todos los departamentos
     public function getAllDepartments(): array
     {
         return $this->departmentRepository->findAll();
     }
 
+    // Asigna un departamento a un profesor
     public function callToAssignDepartment($teacherId, $departmentId): void
     {
         $this->departmentRepository->assignDepartment($teacherId, $departmentId);

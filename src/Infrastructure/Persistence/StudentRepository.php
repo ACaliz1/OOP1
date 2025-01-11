@@ -18,6 +18,7 @@ class StudentRepository implements IStudentRepository{
         $this->db = $db;
     }
 
+    // Guarda un nuevo estudiante
     public function save(Student $student): void
     {
         $uuid = $this->generateUuid();
@@ -65,6 +66,7 @@ class StudentRepository implements IStudentRepository{
         );
     }
 
+    // Encuentra un estudiante por su DNI
     public function findAll(): array
     {
         $query = "
@@ -112,6 +114,7 @@ class StudentRepository implements IStudentRepository{
         return $students;
     }
 
+    // Encuentra un estudiante por su ID
     public function findById($id): ?Student
     {
         $query = "SELECT * FROM students WHERE id = :id";
@@ -121,6 +124,7 @@ class StudentRepository implements IStudentRepository{
         return $stmt->fetchObject(Student::class) ?: null;
     }
 
+    // Verifica si un estudiante existe por su ID
     public function exists(int $id): bool
     {
         $query = "SELECT COUNT(*) FROM students WHERE id = :id";

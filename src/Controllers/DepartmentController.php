@@ -16,6 +16,8 @@ class DepartmentController{
         $this->departmentRepository = new DepartmentRepository($db);
         $this->departmentService = new DepartmentService($this->departmentRepository);
     }
+
+    // Recibe los datos del formulario y crea un nuevo departamento
    public function receiveAndCreateDepartment(){
     $name = $_POST['name'];
     $this->departmentService->createDepartment($name);

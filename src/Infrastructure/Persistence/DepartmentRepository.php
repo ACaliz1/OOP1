@@ -13,6 +13,7 @@ class DepartmentRepository implements IDepartmentRepository {
         $this->db = $db;
     }
 
+    // Devuelve todos los departamentos
     public function findAll(): array {
         $query = "SELECT id, name FROM departments";
         $stmt = $this->db->prepare($query);
@@ -26,6 +27,7 @@ class DepartmentRepository implements IDepartmentRepository {
         return $departments;
     }
 
+    // Asigna un departamento a un profesor
     function assignDepartment($teacherId, $departmentId): void {
         $query="UPDATE teachers SET department_id = :department_id WHERE id = :teacher_id";
         $stmt = $this->db->prepare($query);
@@ -33,6 +35,8 @@ class DepartmentRepository implements IDepartmentRepository {
         $stmt->bindParam(':teacher_id', $teacherId);
         $stmt->execute();
     }
+    
+    // Guarda un nuevo departamento
     function save(Department $department): void {
         $query="INSERT INTO departments(name) VALUES(:name)";
         $stmt = $this->db->prepare($query);
