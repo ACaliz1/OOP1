@@ -13,7 +13,6 @@
 
         function __construct(SubjectRepository $subjectRepository, EnrollmentRepository $enrollmentRepository)
         {
-            $db = DatabaseConnection::getConnection();
 
             $this->subjectRepository = $subjectRepository;
             $this->enrollmentRepository = $enrollmentRepository;

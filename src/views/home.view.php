@@ -23,7 +23,7 @@
             </a>
 
             <!-- Card: Admin Courses -->
-            <a href="/course" class="block bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition transform hover:scale-105 text-center">
+            <a href="/courses" class="block bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition transform hover:scale-105 text-center">
                 <h2 class="text-2xl font-bold text-yellow-700 mb-2">📝 Admin Courses</h2>
                 <p class="text-gray-600">Administra las asignaturas de los cursos.</p>
             </a>

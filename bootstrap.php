@@ -34,7 +34,7 @@ $router->addRoute('GET', '/', [new HomeController(), 'index'])
     ->addRoute('POST', '/create-course', [new CourseController(), 'receivePostAndSendToCourseService'])
     ->addRoute('POST', '/assign-course', [new EnrollmentController(), 'receivePostAndAssignWithCourseService'])
     ->addRoute('GET', '/get-subjects', [new SubjectController(), 'getSubjectsByCourse'])
-    ->addRoute('GET', '/course', action: [new EnrollmentController(), 'showData'])
+    ->addRoute('GET', '/courses', action: [new EnrollmentController(), 'showData'])
     ->addRoute('POST', '/create-subject', action: [new SubjectController(), 'createSubject']);
 
 

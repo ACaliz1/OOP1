@@ -46,7 +46,7 @@ class EnrollmentController
 
         $this->enrollmentService->assignStudentToCourse($courseId, $studentId);
 
-        header('Location: /course?CourseAssign=1');
+        header('Location: /courses?CourseAssign=1');
         exit;
     }
 
