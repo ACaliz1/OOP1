@@ -1,28 +1,33 @@
 <?php 
 
     namespace App\School\Services;
-    use App\School\Entities\Student;
-    use App\School\Entities\Course;
-    use App\School\Entities\Enrollment;
-    use App\Infrastructure\Persistence\StudentRepository;
+
+    use App\Infrastructure\Database\DatabaseConnection;
+
+    use App\Infrastructure\Persistence\SubjectRepository;
     use App\Infrastructure\Persistence\EnrollmentRepository;
 
     class EnrollmentService{
-        private StudentRepository $studentRepository;
+        private SubjectRepository $subjectRepository;
         private EnrollmentRepository $enrollmentRepository;
 
-        function __construct(StudentRepository $studentRepo, EnrollmentRepository $enrollmentRepo)
+        function __construct(SubjectRepository $subjectRepository, EnrollmentRepository $enrollmentRepository)
         {
-            $this->studentRepository=$studentRepo;
-            $this->enrollmentRepository=$enrollmentRepo;
+            $db = DatabaseConnection::getConnection();
+
+            $this->subjectRepository = $subjectRepository;
+            $this->enrollmentRepository = $enrollmentRepository;
+
         }
 
-        function enrollStudentInCourse(Student $student,Course $course){
-            $student=$this->studentRepository->findById($student->getStudentId());
-            if(!$student){
-                throw new \Exception("Student not found");
+        public function assignStudentToCourse(int $courseId, int $studentId): void
+        {
+            $subjects = $this->subjectRepository->findByCourseId($courseId);
+            if (empty($subjects)) {
+                throw new \InvalidArgumentException("El curso seleccionado no tiene asignaturas.");
             }
-            $enrollment=new Enrollment(null,$student,$course);
-            $this->enrollmentRepository->save($enrollment);
+    
+            $subjectId = $_POST['subject_id'];
+            $this->enrollmentRepository->assignStudentToSubject($studentId, $subjectId);
         }
     }

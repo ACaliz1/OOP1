@@ -15,12 +15,8 @@ class CourseService
 
     public function __construct(
         CourseRepository $courseRepository,
-        StudentRepository $studentRepository,
-        SubjectRepository $subjectRepository
     ) {
         $this->courseRepository = $courseRepository;
-        $this->studentRepository = $studentRepository;
-        $this->subjectRepository = $subjectRepository;
     }
 
     // Crear un nuevo curso
@@ -35,18 +31,6 @@ class CourseService
 
         // Pasarlo al repositorio
         $this->courseRepository->save($course);
-    }
-
-    // Asignar un estudiante a un curso
-    public function assignStudentToCourse(int $courseId, int $studentId): void
-    {
-        $subjects = $this->subjectRepository->findByCourseId($courseId);
-        if (empty($subjects)) {
-            throw new \InvalidArgumentException("El curso seleccionado no tiene asignaturas.");
-        }
-
-        $subjectId = $_POST['subject_id'];
-        $this->courseRepository->assignStudentToSubject($studentId, $subjectId);
     }
 
     // Obtener todos los cursos

@@ -71,56 +71,7 @@
 
     <hr class="my-10 border-gray-300">
 
-    <!-- Form asignar Curso a Estudiante-->
-    <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">📋 Asignar Estudiante a un Curso</h2>
-
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-10">
-    <form action="/assign-course" method="POST" class="space-y-4">
-    <!-- Selección de estudiante -->
-    <div>
-        <label for="student_id" class="block font-semibold mb-1">Estudiante:</label>
-        <select id="student_id" name="student_id" required class="w-full p-2 border border-gray-300 rounded-lg">
-            <option value="" disabled selected>Selecciona un Estudiante</option>
-            <?php foreach ($students as $student): ?>
-                <option value="<?= $student->getStudentId() ?>">
-                    <?= $student->getFirstName() . ' ' . $student->getLastName() . ' (' . $student->getStudentId() . ')' ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-
-    <!-- Selección de curso -->
-    <div>
-        <label for="course_id" class="block font-semibold mb-1">Curso:</label>
-        <select id="course_id" name="course_id" required
-            class="w-full p-2 border border-gray-300 rounded-lg">
-            <option value="" disabled selected>Selecciona un Curso</option>
-            <?php foreach ($courses as $course): ?>
-                <option value="<?= $course->getId() ?>">
-                    <?= $course->getName() ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-
-    <!-- Selección de asignatura (se llena dinámicamente) -->
-    <div id="subjects-container">
-        <label for="subject_id" class="block font-semibold mb-1">Asignatura:</label>
-        <select id="subject_id" name="subject_id" required class="w-full p-2 border border-gray-300 rounded-lg">
-            <option value="" disabled selected>Primero selecciona un curso</option>
-        </select>
-    </div>
-
-    <!-- Botón de envío -->
-    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
-        Asignar Estudiante a Asignatura
-    </button>
-</form>
-    </div>
-
-    <hr class="my-10 border-gray-300">
-
-    <!-- Lista de prof -->
+    <!-- Lista de Alumnos -->
     <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">📋 Lista de Alumnos</h2>
 
     <?php if (!empty($students)): ?>
@@ -154,24 +105,4 @@
     <p class="text-center text-red-600 font-bold mt-6">❌ No hay Alumnos disponibles.</p>
     <?php endif; ?>
 </div>
-<script>
-    document.getElementById('course_id').addEventListener('change', function () {
-        const courseId = this.value;
-
-        // Petición AJAX para obtener las asignaturas relacionadas
-        fetch(`/get-subjects?course_id=${courseId}`)
-            .then(response => response.json())
-            .then(data => {
-                const subjectSelect = document.getElementById('subject_id');
-                subjectSelect.innerHTML = '<option value="" disabled selected>Selecciona una Asignatura</option>';
-                data.forEach(subject => {
-                    subjectSelect.innerHTML += `<option value="${subject.id}">${subject.name}</option>`;
-                });
-            })
-            .catch(error => {
-                console.error('Error al cargar las asignaturas:', error);
-            });
-    });
-</script>
-
 <?php require VIEWS . "/partials/footer.view.php"; ?>

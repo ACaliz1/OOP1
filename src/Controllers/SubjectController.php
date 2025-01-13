@@ -20,10 +20,10 @@ class SubjectController
 
         $subjectRepository = new SubjectRepository($db);
         $courseRepository = new CourseRepository($db);
-        $studentRepository = new StudentRepository($db); // Crear instancia de StudentRepository
+        $studentRepository = new StudentRepository($db);
 
         $this->subjectService = new SubjectService($subjectRepository);
-        $this->courseService = new CourseService($courseRepository, $studentRepository, $subjectRepository);
+        $this->courseService = new CourseService($courseRepository);
     }
 
     // Obtener asignaturas por curso
@@ -46,7 +46,7 @@ class SubjectController
     {
         try {
             $name = $_POST['subject_name'];
-            $courseId = $_POST['course_id'];
+            $courseId = $_POST['course_id_to_create'];
     
             $this->subjectService->createSubject($name, $courseId);
     
@@ -55,19 +55,5 @@ class SubjectController
             header('Location: /course?error=' . urlencode($e->getMessage()));
         }
         exit;
-    }
-    
-    // Mostrar datos
-    public function showData()
-    {
-        // Obtener asignaturas y cursos
-        $subjects = $this->subjectService->getAllSubjects();
-        $courses = $this->courseService->getAllCourses();
-
-        // Cargar la vista de asignaturas
-        echo view('subjects', [
-            'subjects' => $subjects,
-            'courses' => $courses,
-        ]);
     }
 }

@@ -16,10 +16,8 @@ class CourseController
     {
         $db = DatabaseConnection::getConnection();
         $courseRepository = new CourseRepository($db);
-        $studentRepository = new StudentRepository($db);
-        $subjectRepository = new SubjectRepository($db);
 
-        $this->courseService = new CourseService($courseRepository, $studentRepository, $subjectRepository);
+        $this->courseService = new CourseService($courseRepository);
     }
 
     public function receivePostAndSendToCourseService()
@@ -30,18 +28,6 @@ class CourseController
         $this->courseService->createCourse($name);
     
         header('Location: /course?successCourse=1');
-        exit;
-    }
-    
-    // Asignar un estudiante a un curso
-    public function receivePostAndAssignWithCourseService()
-    {
-        $courseId = $_POST['course_id'];
-        $studentId = $_POST['student_id'];
-
-        $this->courseService->assignStudentToCourse($courseId, $studentId);
-
-        header('Location: /student?CourseAssign=1');
         exit;
     }
 

@@ -14,6 +14,7 @@ use App\School\Services\Services;
 use App\Controllers\StudentController;
 use App\Controllers\CourseController;
 use App\Controllers\SubjectController;
+use App\Controllers\EnrollmentController;
 
 $db = DatabaseConnection::getConnection();
 $services = new Services();
@@ -31,9 +32,9 @@ $router->addRoute('GET', '/', [new HomeController(), 'index'])
     ->addRoute('GET', '/student', [new StudentController(), 'showData'])
     ->addRoute('POST', '/create-student', [new StudentController(), 'receivePostAndSendToStudentService'])
     ->addRoute('POST', '/create-course', [new CourseController(), 'receivePostAndSendToCourseService'])
-    ->addRoute('POST', '/assign-course', [new CourseController(), 'receivePostAndAssignWithCourseService'])
+    ->addRoute('POST', '/assign-course', [new EnrollmentController(), 'receivePostAndAssignWithCourseService'])
     ->addRoute('GET', '/get-subjects', [new SubjectController(), 'getSubjectsByCourse'])
-    ->addRoute('GET', '/course', action: [new SubjectController(), 'showData'])
+    ->addRoute('GET', '/course', action: [new EnrollmentController(), 'showData'])
     ->addRoute('POST', '/create-subject', action: [new SubjectController(), 'createSubject']);
 
 
