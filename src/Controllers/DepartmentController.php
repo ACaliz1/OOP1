@@ -14,7 +14,7 @@ class DepartmentController{
     public function __construct(){
         $db = DatabaseConnection::getConnection();
         $this->departmentRepository = new DepartmentRepository($db);
-        $this->departmentService = new DepartmentService($this->departmentRepository);
+        $this->departmentService = new DepartmentService();
     }
 
     // Recibe los datos del formulario y crea un nuevo departamento

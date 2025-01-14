@@ -2,10 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Infrastructure\Database\DatabaseConnection;
-use App\Infrastructure\Persistence\SubjectRepository;
-use App\Infrastructure\Persistence\CourseRepository;
-use App\Infrastructure\Persistence\StudentRepository;
 use App\School\Services\SubjectService;
 use App\School\Services\CourseService;
 
@@ -16,14 +12,9 @@ class SubjectController
 
     public function __construct()
     {
-        $db = DatabaseConnection::getConnection();
 
-        $subjectRepository = new SubjectRepository($db);
-        $courseRepository = new CourseRepository($db);
-        $studentRepository = new StudentRepository($db);
-
-        $this->subjectService = new SubjectService($subjectRepository);
-        $this->courseService = new CourseService($courseRepository);
+        $this->subjectService = new SubjectService();
+        $this->courseService = new CourseService();
     }
 
     // Obtener asignaturas por curso
@@ -50,9 +41,9 @@ class SubjectController
     
             $this->subjectService->createSubject($name, $courseId);
     
-            header('Location: /course?successSubject=1');
+            header('Location: /courses?successSubject=1');
         } catch (\InvalidArgumentException $e) {
-            header('Location: /course?error=' . urlencode($e->getMessage()));
+            header('Location: /courses?error=' . urlencode($e->getMessage()));
         }
         exit;
     }

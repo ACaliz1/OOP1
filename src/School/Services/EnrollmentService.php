@@ -11,8 +11,11 @@
         private SubjectRepository $subjectRepository;
         private EnrollmentRepository $enrollmentRepository;
 
-        function __construct(SubjectRepository $subjectRepository, EnrollmentRepository $enrollmentRepository)
+        function __construct()
         {
+            $db = DatabaseConnection::getConnection();
+            $subjectRepository = new SubjectRepository($db);
+            $enrollmentRepository = new EnrollmentRepository($db);
 
             $this->subjectRepository = $subjectRepository;
             $this->enrollmentRepository = $enrollmentRepository;

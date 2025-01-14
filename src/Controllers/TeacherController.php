@@ -2,9 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Infrastructure\Database\DatabaseConnection;
-use App\Infrastructure\Persistence\DepartmentRepository;
-use App\Infrastructure\Persistence\TeacherRepository;
 use App\School\Services\DepartmentService;
 use App\School\Services\TeacherService;
 
@@ -16,12 +13,8 @@ class TeacherController
     public function __construct()
     {
 
-        $db = DatabaseConnection::getConnection();
-        $teacherRepository = new TeacherRepository($db);
-        $teacherService = new TeacherService($teacherRepository);
-
-        $departmentRepository = new DepartmentRepository($db);
-        $departmentService = new DepartmentService($departmentRepository);
+        $teacherService = new TeacherService();
+        $departmentService = new DepartmentService();
 
         $this->teacherService = $teacherService;
         $this->departmentService = $departmentService;

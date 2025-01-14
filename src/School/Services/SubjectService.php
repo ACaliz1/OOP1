@@ -3,13 +3,18 @@
 namespace App\School\Services;
 
 use App\Infrastructure\Persistence\SubjectRepository;
+use App\Infrastructure\Database\DatabaseConnection;
+
 
 class SubjectService
 {
     private SubjectRepository $subjectRepository;
 
-    public function __construct(SubjectRepository $subjectRepository)
+    public function __construct()
     {
+
+        $db = DatabaseConnection::getConnection();
+        $subjectRepository = new SubjectRepository($db);
         $this->subjectRepository = $subjectRepository;
     }
 

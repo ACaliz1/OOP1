@@ -6,6 +6,7 @@ use App\School\Entities\Course;
 use App\Infrastructure\Persistence\CourseRepository;
 use App\Infrastructure\Persistence\StudentRepository;
 use App\Infrastructure\Persistence\SubjectRepository;
+use App\Infrastructure\Database\DatabaseConnection;
 
 class CourseService
 {
@@ -14,8 +15,9 @@ class CourseService
     private SubjectRepository $subjectRepository;
 
     public function __construct(
-        CourseRepository $courseRepository,
     ) {
+        $db = DatabaseConnection::getConnection();
+        $courseRepository = new CourseRepository($db);
         $this->courseRepository = $courseRepository;
     }
 

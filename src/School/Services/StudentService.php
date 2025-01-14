@@ -4,11 +4,14 @@ namespace App\School\Services;
 
 use App\School\Entities\Student;
 use App\Infrastructure\Persistence\StudentRepository;
+use App\Infrastructure\Database\DatabaseConnection;
 
 class StudentService{
     private StudentRepository $studentRepository;
 
-    public function __construct(StudentRepository $studentRepository) {
+    public function __construct() {
+        $db = DatabaseConnection::getConnection();
+        $studentRepository = new StudentRepository($db);
         $this->studentRepository = $studentRepository;
     }
 

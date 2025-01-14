@@ -2,13 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Infrastructure\Database\DatabaseConnection;
-
-use App\Infrastructure\Persistence\EnrollmentRepository;
-use App\Infrastructure\Persistence\SubjectRepository;
-use App\Infrastructure\Persistence\StudentRepository;
-use App\Infrastructure\Persistence\CourseRepository;
-
 use App\School\Services\EnrollmentService;
 use App\School\Services\SubjectService;
 use App\School\Services\CourseService;
@@ -22,20 +15,12 @@ class EnrollmentController
     private StudentService $studentService;
 
     public function __construct()
-    {
-        $db = DatabaseConnection::getConnection();
-        
-        // Crear repositorios
-        $subjectRepository = new SubjectRepository($db);
-        $courseRepository = new CourseRepository($db);
-        $enrollmentRepository = new EnrollmentRepository($db);
-        $studentRepository = new StudentRepository($db);
-        
+    {                
         // Crear servicios utilizando los repositorios
-        $this->subjectService = new SubjectService($subjectRepository);
-        $this->courseService = new CourseService($courseRepository);
-        $this->studentService = new StudentService($studentRepository);
-        $this->enrollmentService = new EnrollmentService($subjectRepository, $enrollmentRepository);
+        $this->subjectService = new SubjectService();
+        $this->courseService = new CourseService();
+        $this->studentService = new StudentService();
+        $this->enrollmentService = new EnrollmentService();
         }
 
     // Asignar un estudiante a un curso

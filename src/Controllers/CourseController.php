@@ -2,10 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Infrastructure\Database\DatabaseConnection;
-use App\Infrastructure\Persistence\CourseRepository;
-use App\Infrastructure\Persistence\StudentRepository;
-use App\Infrastructure\Persistence\SubjectRepository;
 use App\School\Services\CourseService;
 
 class CourseController
@@ -14,10 +10,7 @@ class CourseController
 
     public function __construct()
     {
-        $db = DatabaseConnection::getConnection();
-        $courseRepository = new CourseRepository($db);
-
-        $this->courseService = new CourseService($courseRepository);
+        $this->courseService = new CourseService();
     }
 
     public function receivePostAndSendToCourseService()
@@ -27,7 +20,7 @@ class CourseController
         // Llamar al servicio para crear el curso
         $this->courseService->createCourse($name);
     
-        header('Location: /course?successCourse=1');
+        header('Location: /courses?successCourse=1');
         exit;
     }
 

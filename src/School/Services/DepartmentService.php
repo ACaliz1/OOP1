@@ -4,13 +4,16 @@ namespace App\School\Services;
 
 use App\Infrastructure\Persistence\DepartmentRepository;
 use App\School\Entities\Department;
+use App\Infrastructure\Database\DatabaseConnection;
 
 class DepartmentService
 {
     private DepartmentRepository $departmentRepository;
 
-    public function __construct(DepartmentRepository $departmentRepository)
+    public function __construct()
     {
+        $db=DatabaseConnection::getConnection();
+        $departmentRepository = new DepartmentRepository($db);
         $this->departmentRepository = $departmentRepository;
     }
 

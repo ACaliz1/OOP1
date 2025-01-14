@@ -2,10 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Infrastructure\Database\DatabaseConnection;
-use App\Infrastructure\Persistence\CourseRepository;
-use App\Infrastructure\Persistence\StudentRepository;
-use App\Infrastructure\Persistence\SubjectRepository;
 use App\School\Services\CourseService;
 use App\School\Services\StudentService;
 
@@ -16,13 +12,8 @@ class StudentController
 
     public function __construct()
     {
-        $db = DatabaseConnection::getConnection();
-        $courseRepository = new CourseRepository($db);
-        $studentRepository = new StudentRepository($db);
-        $subjectRepository = new SubjectRepository($db);
-
-        $this->courseService = new CourseService($courseRepository, $studentRepository, $subjectRepository);
-        $this->studentService = new StudentService($studentRepository);
+        $this->courseService = new CourseService();
+        $this->studentService = new StudentService();
     }
 
     // Recibe los datos del formulario y crea un nuevo estudiante

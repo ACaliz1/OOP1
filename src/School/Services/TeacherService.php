@@ -4,11 +4,14 @@ namespace App\School\Services;
 
 use App\Infrastructure\Persistence\TeacherRepository;
 use App\School\Entities\Teacher;
+use App\Infrastructure\Database\DatabaseConnection;
 
 class TeacherService {
     private TeacherRepository $teacherRepository;
 
-    public function __construct(TeacherRepository $teacherRepository) {
+    public function __construct() {
+        $db = DatabaseConnection::getConnection();
+        $teacherRepository= new TeacherRepository($db);
         $this->teacherRepository = $teacherRepository;
     }
 
