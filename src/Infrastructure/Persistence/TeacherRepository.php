@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\School\Entities\Department;
 use App\School\Entities\Teacher;
 use App\School\Repositories\ITeacherRepository;
 
@@ -57,7 +56,7 @@ class TeacherRepository implements ITeacherRepository
         return $stmt->fetchObject(Teacher::class) ?: null;
     }
 
-    // Encuentra un profesor por su DNI
+    // Encuentra todos los profesores
     public function findAll(): array {
         $query = "
             SELECT 
@@ -87,7 +86,7 @@ class TeacherRepository implements ITeacherRepository
                 $row['first_name'],
                 $row['last_name'],
                 $row['email'],
-                '********', // No mostrar la contraseña
+                '********',
                 $row['dni']
             );
             $teacher->setId($row['teacher_id']);
