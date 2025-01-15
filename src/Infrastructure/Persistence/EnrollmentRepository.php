@@ -45,12 +45,13 @@
     // Asigna un estudiante a una asignatura específica
     public function assignStudentToSubject(int $studentId, int $subjectId): void
     {
-        $query = "INSERT INTO enrollments (student_id, subject_id, enrollment_date) VALUES (:student_id, :subject_id, :enrollment_date)";
+        $query = "INSERT INTO enrollments (student_id, subject_id, enrollment_date) 
+                  VALUES (:student_id, :subject_id, :enrollment_date)";
         $stmt = $this->db->prepare($query);
         $stmt->execute([
             'student_id' => $studentId,
             'subject_id' => $subjectId,
-            'enrollment_date' => date('Y-m-d')
+            'enrollment_date' => date('Y-m-d'),
         ]);
     }
     }

@@ -39,16 +39,21 @@ class EnrollmentController
         }
 
     // Asignar un estudiante a un curso
-    public function receivePostAndAssignWithCourseService()
-    {
-        $courseId = $_POST['course_id'];
-        $studentId = $_POST['student_id'];
-
-        $this->enrollmentService->assignStudentToCourse($courseId, $studentId);
-
-        header('Location: /courses?CourseAssign=1');
-        exit;
-    }
+        public function receivePostAndAssignWithCourseService()
+        {
+            try {
+                $courseId = $_POST['course_id'];
+                $studentId = $_POST['student_id'];
+                $subjectId = $_POST['subject_id'] ?? null;
+    
+                $this->enrollmentService->assignStudentToCourse($courseId, $studentId, $subjectId);
+    
+                header('Location: /courses?CourseAssign=1');
+            } catch (\Exception $e) {
+                header('Location: /courses?error=' . urlencode($e->getMessage()));
+            }
+            exit;
+        }
 
     public function showData()
     {

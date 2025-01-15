@@ -19,14 +19,18 @@
 
         }
 
-        public function assignStudentToCourse(int $courseId, int $studentId): void
-        {
-            $subjects = $this->subjectRepository->findByCourseId($courseId);
-            if (empty($subjects)) {
-                throw new \InvalidArgumentException("El curso seleccionado no tiene asignaturas.");
-            }
-    
-            $subjectId = $_POST['subject_id'];
-            $this->enrollmentRepository->assignStudentToSubject($studentId, $subjectId);
+        public function assignStudentToCourse(int $courseId, int $studentId, ?int $subjectId): void
+    {
+        $subjects = $this->subjectRepository->findByCourseId($courseId);
+
+        if (empty($subjects)) {
+            throw new \InvalidArgumentException("El curso seleccionado no tiene asignaturas.");
         }
+
+        if ($subjectId && !$this->subjectRepository->existsByIdAndCourse($subjectId, $courseId)) {
+            throw new \InvalidArgumentException("La asignatura seleccionada no pertenece al curso.");
+        }
+
+        $this->enrollmentRepository->assignStudentToSubject($studentId, $subjectId ?? $subjects[0]['id']);
+    }
     }

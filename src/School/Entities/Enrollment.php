@@ -1,23 +1,40 @@
 <?php
     namespace App\School\Entities;
 
-
-
-    class Enrollment{
-        private int $id;
+    class Enrollment
+    {
+        private ?int $id = null;
         private Student $student;
         private Course $course;
-        private ?Subject $subject;
+        private ?Subject $subject = null;
         private \DateTime $enrollmentDate;
-        
-        
-        public function getStudent()
+    
+        public function __construct(Student $student, Course $course, ?Subject $subject)
         {
-                return $this->student;
+            $this->student = $student;
+            $this->course = $course;
+            $this->subject = $subject;
+            $this->enrollmentDate = new \DateTime();
         }
-
-        public function getId()
+    
+        public function getStudent(): Student
         {
-                return $this->id;
+            return $this->student;
+        }
+    
+        public function getCourse(): Course
+        {
+            return $this->course;
+        }
+    
+        public function getSubject(): ?Subject
+        {
+            return $this->subject;
+        }
+    
+        public function getEnrollmentDate(): \DateTime
+        {
+            return $this->enrollmentDate;
         }
     }
+    

@@ -50,9 +50,9 @@ class SubjectController
     
             $this->subjectService->createSubject($name, $courseId);
     
-            header('Location: /course?successSubject=1');
+            header('Location: /courses?successSubject=1');
         } catch (\InvalidArgumentException $e) {
-            header('Location: /course?error=' . urlencode($e->getMessage()));
+            header('Location: /courses?error=' . urlencode($e->getMessage()));
         }
         exit;
     }

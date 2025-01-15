@@ -87,7 +87,7 @@ class TeacherRepository implements ITeacherRepository
                 $row['first_name'],
                 $row['last_name'],
                 $row['email'],
-                '********', // No mostrar la contraseña
+                '********',
                 $row['dni']
             );
             $teacher->setId($row['teacher_id']);

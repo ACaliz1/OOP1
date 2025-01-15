@@ -4,8 +4,6 @@ namespace App\Controllers;
 
 use App\Infrastructure\Database\DatabaseConnection;
 use App\Infrastructure\Persistence\CourseRepository;
-use App\Infrastructure\Persistence\StudentRepository;
-use App\Infrastructure\Persistence\SubjectRepository;
 use App\School\Services\CourseService;
 
 class CourseController
@@ -24,10 +22,12 @@ class CourseController
     {
         $name = $_POST['name'];
     
-        // Llamar al servicio para crear el curso
-        $this->courseService->createCourse($name);
-    
-        header('Location: /course?successCourse=1');
+        try {
+            $this->courseService->createCourse($name);
+            header('Location: /courses?successCourse=1');
+        } catch (\InvalidArgumentException $e) {
+            header('Location: /courses?error=' . urlencode($e->getMessage()));
+        }
         exit;
     }
 

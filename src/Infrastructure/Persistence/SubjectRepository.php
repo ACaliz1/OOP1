@@ -65,5 +65,15 @@ class SubjectRepository
     ]);
     return $stmt->fetchColumn() > 0;
 }
-
+// Verifica si una asignatura pertenece a un curso
+public function existsByIdAndCourse(int $subjectId, int $courseId): bool
+{
+    $query = "SELECT COUNT(*) FROM subjects WHERE id = :subject_id AND course_id = :course_id";
+    $stmt = $this->db->prepare($query);
+    $stmt->execute([
+        'subject_id' => $subjectId,
+        'course_id' => $courseId,
+    ]);
+    return $stmt->fetchColumn() > 0;
+}
 }

@@ -12,6 +12,8 @@ class Student extends User
     protected ?int $studentId = null;
     protected ?string $courseName = null;
     protected $enrollments = [];
+    protected ?\DateTime $createdAt = null;
+    protected ?\DateTime $updatedAt = null;
 
     public function __construct($firstName, $lastName, $email, $password, $dni)
     {

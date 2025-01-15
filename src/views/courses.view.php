@@ -12,6 +12,10 @@
     <div class="alert alert-success text-green-600 font-bold mb-4">
         ✅ Curso creado con éxito.
     </div>
+    <?php elseif ($_GET['CourseAssign'] == 1): ?>
+    <div class="alert alert-success text-green-600 font-bold mb-4">
+        ✅ Alumno asignado a curso con éxito.
+    </div>
     <?php elseif (isset($_GET['error'])): ?>
     <div class="alert alert-error text-red-600 font-bold mb-4">
         ❌ <?= htmlspecialchars($_GET['error']) ?>

@@ -37,10 +37,22 @@ class DepartmentRepository implements IDepartmentRepository {
     }
     
     // Guarda un nuevo departamento
-    function save(Department $department): void {
-        $query="INSERT INTO departments(name) VALUES(:name)";
+    public function save(Department $department): void
+    {
+        if ($this->existsByName($department->getName())) {
+            throw new \InvalidArgumentException("El departamento ya existe.");
+        }
+
+        $query = "INSERT INTO departments (name) VALUES (:name)";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':name', $department->getName());
-        $stmt->execute();
+        $stmt->execute(['name' => $department->getName()]);
+    }
+
+    public function existsByName(string $name): bool
+    {
+        $query = "SELECT COUNT(*) FROM departments WHERE name = :name";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['name' => $name]);
+        return $stmt->fetchColumn() > 0;
     }
 }

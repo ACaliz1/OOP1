@@ -16,12 +16,26 @@ class CourseRepository
     // Guarda un nuevo curso
     public function save(Course $course): void
     {
+        // Verificar si el curso ya existe
+        if ($this->existsByName($course->getName())) {
+            throw new \InvalidArgumentException("El curso ya existe.");
+        }
+
         $query = "INSERT INTO courses (name, degree_id) VALUES (:name, :degree_id)";
         $stmt = $this->db->prepare($query);
         $stmt->execute([
             'name' => $course->getName(),
-            'degree_id' => 2 // hardcodeado porque no lo estamos usando aun
+            'degree_id' => 2, // hardcodeado porque no lo estamos usando aun
         ]);
+    }
+
+    // Verifica si un curso existe por su nombre
+    public function existsByName(string $name): bool
+    {
+        $query = "SELECT COUNT(*) FROM courses WHERE name = :name";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute(['name' => $name]);
+        return $stmt->fetchColumn() > 0;
     }
 
     // Obtiene todos los cursos
@@ -30,12 +44,12 @@ class CourseRepository
         $query = "SELECT id, name FROM courses";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
-    
+
         $courses = [];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $courses[] = new Course($row['name'], $row['id']);
         }
-    
+
         return $courses;
     }
 
