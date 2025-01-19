@@ -26,7 +26,6 @@ class CourseService
             throw new \InvalidArgumentException("El nombre del curso es obligatorio.");
         }
 
-        // Crear un objeto Course
         $course = new Course($name, null);
 
         // Pasarlo al repositorio

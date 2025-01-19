@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Infrastructure\Database\DatabaseConnection;
 use App\Infrastructure\Persistence\CourseRepository;
 use App\Infrastructure\Persistence\StudentRepository;
-use App\Infrastructure\Persistence\SubjectRepository;
 use App\School\Services\CourseService;
 use App\School\Services\StudentService;
 
@@ -19,9 +18,8 @@ class StudentController
         $db = DatabaseConnection::getConnection();
         $courseRepository = new CourseRepository($db);
         $studentRepository = new StudentRepository($db);
-        $subjectRepository = new SubjectRepository($db);
 
-        $this->courseService = new CourseService($courseRepository, $studentRepository, $subjectRepository);
+        $this->courseService = new CourseService($courseRepository);
         $this->studentService = new StudentService($studentRepository);
     }
 

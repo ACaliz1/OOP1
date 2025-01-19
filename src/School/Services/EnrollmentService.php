@@ -2,8 +2,6 @@
 
     namespace App\School\Services;
 
-    use App\Infrastructure\Database\DatabaseConnection;
-
     use App\Infrastructure\Persistence\SubjectRepository;
     use App\Infrastructure\Persistence\EnrollmentRepository;
 

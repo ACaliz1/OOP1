@@ -103,12 +103,12 @@ class StudentRepository implements IStudentRepository{
                 $row['first_name'],
                 $row['last_name'],
                 $row['email'],
-                '', // Contraseña no necesaria
+                '',
                 $row['dni']
             );
             $student->setStudentId((int)$row['student_id']);
             $student->setId((int)$row['user_id']);
-            $student->setCourseName($row['course_name'] ?? 'Sin Curso'); // Añadir el nombre del curso
+            $student->setCourseName($row['course_name'] ?? 'Sin Curso');
             $students[] = $student;
         }
         return $students;

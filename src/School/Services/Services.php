@@ -1,8 +1,6 @@
 <?php 
 
     namespace App\School\Services;
-    use App\School\Entities\Student;
-    use App\School\Entities\Course;
 
     class Services{
         private array $services=[];
